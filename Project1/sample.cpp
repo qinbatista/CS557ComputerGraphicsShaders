@@ -152,7 +152,7 @@ char * ColorNames[ ] =
 // the color definitions:
 // this order must match the menu order
 
-const GLfloat Colors[ ][3] = 
+const GLfloat Colors[ ][3] =
 {
 	{ 1., 0., 0. },		// red
 	{ 1., 1., 0. },		// yellow
@@ -798,7 +798,7 @@ MouseButton( int button, int state, int x, int y )
 	if( DebugOn != 0 )
 		fprintf( stderr, "MouseButton: %d, %d, %d, %d\n", button, state, x, y );
 
-	
+
 	// get the proper button bit mask:
 
 	switch( button )
@@ -1000,7 +1000,7 @@ Axes( float length )
 			int j = xorder[i];
 			if( j < 0 )
 			{
-				
+
 				glEnd( );
 				glBegin( GL_LINE_STRIP );
 				j = -j;
@@ -1016,7 +1016,7 @@ Axes( float length )
 			int j = yorder[i];
 			if( j < 0 )
 			{
-				
+
 				glEnd( );
 				glBegin( GL_LINE_STRIP );
 				j = -j;
@@ -1032,7 +1032,7 @@ Axes( float length )
 			int j = zorder[i];
 			if( j < 0 )
 			{
-				
+
 				glEnd( );
 				glBegin( GL_LINE_STRIP );
 				j = -j;
@@ -1081,7 +1081,7 @@ HsvRgb( float hsv[3], float rgb[3] )
 	}
 
 	// get an rgb from the hue itself:
-	
+
 	float i = (float)floor( h );
 	float f = h - i;
 	float p = v * ( 1.f - s );
@@ -1094,23 +1094,23 @@ HsvRgb( float hsv[3], float rgb[3] )
 		case 0:
 			r = v;	g = t;	b = p;
 			break;
-	
+
 		case 1:
 			r = q;	g = v;	b = p;
 			break;
-	
+
 		case 2:
 			r = p;	g = v;	b = t;
 			break;
-	
+
 		case 3:
 			r = p;	g = q;	b = v;
 			break;
-	
+
 		case 4:
 			r = t;	g = p;	b = v;
 			break;
-	
+
 		case 5:
 			r = v;	g = p;	b = q;
 			break;

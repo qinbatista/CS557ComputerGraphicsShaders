@@ -21,7 +21,7 @@ main( )
 	vec3 myColor = vec3(1.0, 0.5, 0.0 );
 	float ds = uD;
 	float dt = uD;
-	if(	uS0-ds/2. <= vST.s  &&  vST.s <= uS0+ds/2.  && 
+	if(	uS0-ds/2. <= vST.s  &&  vST.s <= uS0+ds/2.  &&
 		uT0-dt/2. <= vST.t  &&  vST.t <= uT0+dt/2.  )
 	{
 			myColor = vec3( 1., 0., 0. );
