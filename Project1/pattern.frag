@@ -3,7 +3,7 @@
 uniform float uKa, uKd, uKs;		// coefficients of each type of lighting
 uniform float uShininess;		// specular exponent
 uniform float uS0, uT0, uD;		// square pattern
-uniform float diam,Ar,Br;		// diam
+uniform float diam,Ar,Br,uTol;		// diam
 
 varying vec2 vST;			// texture coords
 varying vec3 vN;			// normal vector
@@ -34,7 +34,7 @@ void main() {
     float tc = numint * diam + R;
     float X = (vST.s - sc);
     float Y = (vST.t - tc);
-    if((X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) <= R * R) {
+    if((X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) <= (R+uTol) * (R+uTol) {
         //already insdie the circular pattern
         myColor = vec3(0.5, 0.13, 0);
     }
