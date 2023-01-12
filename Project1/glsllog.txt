@@ -1,0 +1,6 @@
+
+0(20) : error C1008: undefined variable "vST"
+0(20) : error C1008: undefined variable "vST"
+0(21) : error C1008: undefined variable "vST"
+0(21) : error C1008: undefined variable "vST"
+
