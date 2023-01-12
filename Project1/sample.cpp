@@ -419,11 +419,11 @@ Display( )
 	Pattern->SetUniformVariable( (char *)"uD", D*(float)(.5+.5*sin(2.*M_PI*Time)) );
 	Pattern->SetUniformVariable( (char *)"uTime",  Time );
 
-    Pattern->SetUniformVariable( (char *)"diam",  0.1f );
-    Pattern->SetUniformVariable( (char *)"diam",  0.1f );
-    Pattern->SetUniformVariable( (char *)"Ar",  1.f );
-    Pattern->SetUniformVariable( (char *)"Br",  0.5f );
-    Pattern->SetUniformVariable( (char *)"uTol",  0.5f );
+    Pattern->SetUniformVariable( (char *)"diam",  0.1f*(float)(.5+.5*sin(2.*M_PI*Time)) );
+    Pattern->SetUniformVariable( (char *)"diam",  0.1f*(float)(.5+.5*sin(2.*M_PI*Time)) );
+    Pattern->SetUniformVariable( (char *)"Ar",  1.f*(float)(.5+.5*sin(2.*M_PI*Time)) );
+    Pattern->SetUniformVariable( (char *)"Br",  0.5f*(float)(.5+.5*sin(2.*M_PI*Time)) );
+    Pattern->SetUniformVariable( (char *)"uTol",  0.01f*(float)(.5+.5*sin(2.*M_PI*Time)) );
 
 
 

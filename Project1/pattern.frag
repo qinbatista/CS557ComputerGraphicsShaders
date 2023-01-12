@@ -17,6 +17,7 @@ void main() {
 
     vec3 SpecularColor = vec3(1., 1., 1.);
     vec3 myColor = vec3(1.0, 0.5, 0.0);
+    vec3 myPatternColor = vec3(0.5, 0.13, 0);
     //square pattern
 	// float ds = uD;
 	// float dt = uD;
@@ -34,9 +35,19 @@ void main() {
     float tc = numint * diam + R;
     float X = (vST.s - sc);
     float Y = (vST.t - tc);
-    if((X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) <= (R+uTol) * (R+uTol) {
-        //already insdie the circular pattern
-        myColor = vec3(0.5, 0.13, 0);
+    if((X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) <= (R+uTol) * (R+uTol))
+    {
+        if((X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) <= (R+uTol) * (R+uTol) && (X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) >= (R-uTol) * (R-uTol))
+        {
+            float t = smoothstep( (R-uTol) * (R-uTol), (R+uTol) * (R+uTol), (X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) );
+            vec3 myColorWhite = vec3(1.f, 1.f, 1.f);
+            myColor = mix( myPatternColor, myColor, t );
+            // myColor = vec3(0.f, 0.01f, 0.5f);
+        }
+        else
+        {
+            myColor = myPatternColor;
+        }
     }
 
     vec3 ambient = uKa * myColor;
