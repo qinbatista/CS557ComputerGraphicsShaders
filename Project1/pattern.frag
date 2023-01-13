@@ -34,7 +34,10 @@ void main() {
     int numins = int(vST.s / diam);
     int numint = int(vST.t / diam);
     float R = diam / 2;
-    if(numint == 1 || numint == 3 || numint == 5 || numint == 7 || numint == 9 || numint == 11) {
+    int value = numint/2;
+    int remain = numint - value*2;
+    if(remain == 1)
+    {
         if(vST.s < numins * diam + R) {
             numins = numins - 1;
         }

@@ -1,3 +1,3 @@
 
-ERROR: 0:81: '&&' : syntax error: syntax error
+ERROR: 0:37: Incompatible types in initialization (and no available implicit conversion)
 
