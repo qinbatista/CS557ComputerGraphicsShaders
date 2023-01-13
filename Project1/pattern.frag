@@ -3,8 +3,7 @@
 uniform float uKa, uKd, uKs;		// coefficients of each type of lighting
 uniform float uShininess;		// specular exponent
 uniform float uS0, uT0, uD;		// square pattern
-uniform float diam,Ar,Br,uTol;		// diam
-
+uniform float diam, Ar, Br, uTol;		// diam
 varying vec2 vST;			// texture coords
 varying vec3 vN;			// normal vector
 varying vec3 vL;			// vector from point to light
@@ -28,24 +27,32 @@ void main() {
 	// }
 
     //circular pattern
+    float sc = 0;
+    float X = 0;
+    float tc = 0;
+    float Y = 0;
     int numins = int(vST.s / diam);
     int numint = int(vST.t / diam);
-    float R =  diam / 2;
-    float sc = numins * diam + R;
-    float tc = numint * diam + R;
-    float X = (vST.s - sc);
-    float Y = (vST.t - tc);
-    if((X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) <= (R+uTol) * (R+uTol))
-    {
-        if((X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) <= (R+uTol) * (R+uTol) && (X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) >= (R-uTol) * (R-uTol))
-        {
-            float t = smoothstep( (R-uTol) * (R-uTol), (R+uTol) * (R+uTol), (X/Ar) * (X/Br) + (Y/Ar) * (Y/Br) );
-            vec3 myColorWhite = vec3(1.f, 1.f, 1.f);
-            myColor = mix( myPatternColor, myColor, t );
-            // myColor = vec3(0.f, 0.01f, 0.5f);
+    float R = diam / 2;
+    if(numint == 1 || numint == 3 || numint == 5 || numint == 7 || numint == 9 || numint == 11) {
+        if(vST.s < numins * diam + R) {
+            numins = numins - 1;
         }
-        else
-        {
+        sc = numins * diam + R + R;
+        tc = numint * diam + R;
+        X = (vST.s - sc);
+        Y = (vST.t - tc);
+    } else {
+        sc = numins * diam + R;
+        tc = numint * diam + R;
+        X = (vST.s - sc);
+        Y = (vST.t - tc);
+    }
+    if(X / Ar * X / Ar + Y / Br * Y / Br <= (R + uTol) * (R + uTol)) {
+        if(X / Ar * X / Ar + Y / Br * Y / Br >= (R - uTol) * (R - uTol)) {
+            float t = smoothstep((R - uTol) * (R - uTol), (R + uTol) * (R + uTol), (X / Ar) * (X / Br) + (Y / Ar) * (Y / Br));
+            myColor = mix(myPatternColor, myColor, t);
+        } else {
             myColor = myPatternColor;
         }
     }

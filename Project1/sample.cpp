@@ -413,19 +413,14 @@ Display( )
 	Pattern->SetUniformVariable( (char *)"uKd", 0.6f );
 	Pattern->SetUniformVariable( (char *)"uKs", 0.3f );
 	Pattern->SetUniformVariable( (char *)"uShininess", 8.f );
-
 	Pattern->SetUniformVariable( (char *)"uS0", S0);
 	Pattern->SetUniformVariable( (char *)"uT0", T0 );
 	Pattern->SetUniformVariable( (char *)"uD", D*(float)(.5+.5*sin(2.*M_PI*Time)) );
 	Pattern->SetUniformVariable( (char *)"uTime",  Time );
-
-    Pattern->SetUniformVariable( (char *)"diam",  0.1f*(float)(.5+.5*sin(2.*M_PI*Time)) );
-    Pattern->SetUniformVariable( (char *)"diam",  0.1f*(float)(.5+.5*sin(2.*M_PI*Time)) );
-    Pattern->SetUniformVariable( (char *)"Ar",  1.f*(float)(.5+.5*sin(2.*M_PI*Time)) );
-    Pattern->SetUniformVariable( (char *)"Br",  0.5f*(float)(.5+.5*sin(2.*M_PI*Time)) );
-    Pattern->SetUniformVariable( (char *)"uTol",  0.01f*(float)(.5+.5*sin(2.*M_PI*Time)) );
-
-
+    Pattern->SetUniformVariable( (char *)"diam",  0.2f*(float)(.5+.5*sin(2.*M_PI*Time)) );
+    Pattern->SetUniformVariable( (char *)"Ar",  0.7f+0.3f*(float)(.5+.5*sin(2.*M_PI*Time)) );
+    Pattern->SetUniformVariable( (char *)"Br",  0.3f+0.7f*(float)(.5+.5*sin(2.*M_PI*Time)) );
+    Pattern->SetUniformVariable( (char *)"uTol",  0.005f*(float)(.5+.5*sin(2.*M_PI*Time)) );
 
 
 	// draw the current object:
