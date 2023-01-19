@@ -1,3 +1,11 @@
 
-ERROR: 0:37: Incompatible types in initialization (and no available implicit conversion)
+ERROR: 0:14: Invalid storage qualifiers 'in' in global variable context
+ERROR: 0:39: Use of undeclared identifier 'vMCposition'
+ERROR: 0:40: Use of undeclared identifier 'nv'
+ERROR: 0:40: Use of undeclared identifier 'nv'
+ERROR: 0:40: Use of undeclared identifier 'nv'
+ERROR: 0:40: Use of undeclared identifier 'nv'
+ERROR: 0:42: Use of undeclared identifier 'n'
+ERROR: 0:42: Use of undeclared identifier 'n'
+ERROR: 0:43: Use of undeclared identifier 'n'
 

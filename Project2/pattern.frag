@@ -11,7 +11,7 @@ varying vec3 vE;			// vector from point to eye
 
 uniform sampler3D Noise3;
 uniform float uNoiseFreq, uNoiseMag;
-in vec3 vMCposition;
+varying vec3 vMCposition;
 void main() {
 
 	// vec4 nv = texture3D(Noise3, uNoiseFreq * vMCposition);
@@ -66,9 +66,13 @@ void main() {
 		X = (vST.s - sc);
 		Y = (vST.t - tc);
 	}
-	if(X / Ar * X / Ar + Y / Br * Y / Br <= (R + uTol) * (R + uTol)) {
-		if(X / Ar * X / Ar + Y / Br * Y / Br >= (R - uTol) * (R - uTol)) {
-			float t = smoothstep((R - uTol) * (R - uTol), (R + uTol) * (R + uTol), (X / Ar) * (X / Br) + (Y / Ar) * (Y / Br));
+	float Dist = sqrt(X / Ar * X / Ar + Y / Br * Y / Br);
+	float OffsetDist = Dist + n;
+	float scale = OffsetDist / Dist;
+	Dist = Dist * scale;
+	if(Dist <= (R + uTol)) {
+		if(Dist >= (R - uTol)) {
+			float t = smoothstep((R - uTol), (R + uTol), Dist);
 			myColor = mix(myPatternColor, myColor, t);
 		} else {
 			myColor = myPatternColor;

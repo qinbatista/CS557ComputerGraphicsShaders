@@ -11,7 +11,7 @@ vec3 LightPosition = vec3(  0., 5., 5. );
 const float AMP = 0.2;
 const float PI = 3.14159265;
 const float W = 2.;
-out vec3 vMCposition;
+varying vec3 vMCposition;
 void main() {
 	vMCposition = gl_Vertex.xyz;
 	vST = gl_MultiTexCoord0.st;
