@@ -365,7 +365,7 @@ void Display()
 	T0 = 0.5f;
 	D = 0.1f;
 	float updateValue = sin(2. * M_PI * Time);
-	// updateValue = 0;
+	updateValue = 0;
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_3D, TexName);
 	Pattern->Use();
