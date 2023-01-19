@@ -1,11 +1,4 @@
 
-ERROR: 0:14: Invalid storage qualifiers 'in' in global variable context
-ERROR: 0:39: Use of undeclared identifier 'vMCposition'
-ERROR: 0:40: Use of undeclared identifier 'nv'
-ERROR: 0:40: Use of undeclared identifier 'nv'
-ERROR: 0:40: Use of undeclared identifier 'nv'
-ERROR: 0:40: Use of undeclared identifier 'nv'
-ERROR: 0:42: Use of undeclared identifier 'n'
-ERROR: 0:42: Use of undeclared identifier 'n'
-ERROR: 0:43: Use of undeclared identifier 'n'
+ERROR: 0:32: Type (vec3) of redeclaration of 'ECposition' is incompatible with type (vec4) of previous declaration
+ERROR: 0:33: '-' does not operate on 'vec3' and 'vec4'
 

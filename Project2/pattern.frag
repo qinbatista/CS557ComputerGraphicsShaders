@@ -14,12 +14,6 @@ uniform float uNoiseFreq, uNoiseMag;
 varying vec3 vMCposition;
 void main() {
 
-	// vec4 nv = texture3D(Noise3, uNoiseFreq * vMCposition);
-	// float n = nv.r + nv.g + nv.b + nv.a; //rangeis1.->3.
-	// // n = (n - 1.) / 2.; // range is now 0. -> 1.
-	// n = n - 2.; // range is now -1. -> 1.
-	// n *= uNoiseMag;
-
 	vec3 Normal = normalize(vN);
 	vec3 Light = normalize(vL);
 	vec3 Eye = normalize(vE);
@@ -58,18 +52,18 @@ void main() {
 		}
 		sc = numins * diam + R + R;
 		tc = numint * diam + R;
-		X = (vST.s - sc);
-		Y = (vST.t - tc);
+		X = (vST.s+n - sc);
+		Y = (vST.t+n - tc);
 	} else {
 		sc = numins * diam + R;
 		tc = numint * diam + R;
-		X = (vST.s - sc);
-		Y = (vST.t - tc);
+		X = (vST.s+n - sc);
+		Y = (vST.t+n - tc);
 	}
 	float Dist = sqrt(X / Ar * X / Ar + Y / Br * Y / Br);
 	float OffsetDist = Dist + n;
 	float scale = OffsetDist / Dist;
-	Dist = Dist * scale;
+	Dist = Dist;
 	if(Dist <= (R + uTol)) {
 		if(Dist >= (R - uTol)) {
 			float t = smoothstep((R - uTol), (R + uTol), Dist);
