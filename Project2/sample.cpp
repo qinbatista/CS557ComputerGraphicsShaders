@@ -365,13 +365,13 @@ void Display()
 	T0 = 0.5f;
 	D = 0.1f;
 	float updateValue = sin(2. * M_PI * Time);
-	updateValue = 0;
+	// updateValue = 0;
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_3D, TexName);
 	Pattern->Use();
 	Pattern->SetUniformVariable("uTexUnit", 3);
-	Pattern->SetUniformVariable("uNoiseFreq", 1.f);
-	Pattern->SetUniformVariable("uNoiseMag", 0.05f * (float)sin(2. * M_PI * Time));
+	Pattern->SetUniformVariable("uNoiseFreq", 1.f*(float)sin(2. * M_PI * Time));
+	Pattern->SetUniformVariable("uNoiseMag", 0.5f * (float)sin(2. * M_PI * Time));
 	Pattern->SetUniformVariable((char *)"uKa", 0.1f);
 	Pattern->SetUniformVariable((char *)"uKd", 0.6f);
 	Pattern->SetUniformVariable((char *)"uKs", 0.3f);
@@ -652,6 +652,14 @@ void InitGraphics()
 		return;
 	}
 
+	glBindTexture(GL_TEXTURE_3D, TexName);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, nums, numt, nump, 0, GL_RGBA,
+				 GL_UNSIGNED_BYTE, texture);
 	Pattern = new GLSLProgram();
 	bool valid = Pattern->Create((char *)"pattern.vert", (char *)"pattern.frag");
 	if (!valid)

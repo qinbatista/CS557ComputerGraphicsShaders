@@ -63,7 +63,7 @@ void main() {
 	float Dist = sqrt(X / Ar * X / Ar + Y / Br * Y / Br);
 	float OffsetDist = Dist + n;
 	float scale = OffsetDist / Dist;
-	Dist = Dist;
+	Dist = Dist+n;
 	if(Dist <= (R + uTol)) {
 		if(Dist >= (R - uTol)) {
 			float t = smoothstep((R - uTol), (R + uTol), Dist);
