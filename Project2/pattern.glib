@@ -1,0 +1,22 @@
+##OpenGL GLIB
+
+#GSTAP
+
+Noise3D 64
+
+Perspective 90
+LookAt 0 0 2  0 0 0  0 1 0
+
+
+Vertex   pattern.vert
+Fragment pattern.frag
+Program  Pattern					\
+	uS0    <0.2 0.5 0.8>				\
+	uT0    <0.2 0.5 0.8>				\
+	uD     <0.1 0.2 0.4>				\
+	uKa  0.1					\
+	uKd  0.6					\
+	uKs  0.3					\
+	uShininess 8.0
+
+Sphere 1 50 50
