@@ -1,4 +1,14 @@
 
-ERROR: 0:32: Type (vec3) of redeclaration of 'ECposition' is incompatible with type (vec4) of previous declaration
-ERROR: 0:33: '-' does not operate on 'vec3' and 'vec4'
+ERROR: 0:46: Incompatible types in initialization (and no available implicit conversion)
+ERROR: 0:50: Use of undeclared identifier 'R'
+ERROR: 0:53: Use of undeclared identifier 'R'
+ERROR: 0:53: Use of undeclared identifier 'R'
+ERROR: 0:54: Use of undeclared identifier 'R'
+ERROR: 0:58: Use of undeclared identifier 'R'
+ERROR: 0:59: Use of undeclared identifier 'R'
+ERROR: 0:67: Use of undeclared identifier 'R'
+ERROR: 0:68: Use of undeclared identifier 'R'
+ERROR: 0:69: Use of undeclared identifier 'R'
+ERROR: 0:69: Use of undeclared identifier 'R'
+ERROR: 0:70: Use of undeclared identifier 't'
 

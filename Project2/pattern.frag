@@ -8,10 +8,10 @@ varying vec2 vST;			// texture coords
 varying vec3 vN;			// normal vector
 varying vec3 vL;			// vector from point to light
 varying vec3 vE;			// vector from point to eye
-
 uniform sampler3D Noise3;
 uniform float uNoiseFreq, uNoiseMag;
 varying vec3 vMCposition;
+uniform float uAlpha;			// vector from point to eye
 void main() {
 
 	vec3 Normal = normalize(vN);
@@ -52,20 +52,20 @@ void main() {
 		}
 		sc = numins * diam + R + R;
 		tc = numint * diam + R;
-		X = (vST.s+n - sc);
-		Y = (vST.t+n - tc);
+		X = (vST.s - sc);
+		Y = (vST.t - tc);
 	} else {
 		sc = numins * diam + R;
 		tc = numint * diam + R;
-		X = (vST.s+n - sc);
-		Y = (vST.t+n - tc);
+		X = (vST.s - sc);
+		Y = (vST.t - tc);
 	}
 	float Dist = sqrt(X / Ar * X / Ar + Y / Br * Y / Br);
 	float OffsetDist = Dist + n;
 	float scale = OffsetDist / Dist;
-	Dist = Dist+n;
-	if(Dist <= (R + uTol)) {
-		if(Dist >= (R - uTol)) {
+	Dist = Dist*scale;
+	if(Dist <= (R + uTol)*uAlpha) {
+		if(Dist >= (R - uTol)*uAlpha) {
 			float t = smoothstep((R - uTol), (R + uTol), Dist);
 			myColor = mix(myPatternColor, myColor, t);
 		} else {

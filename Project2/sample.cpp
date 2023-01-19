@@ -369,9 +369,10 @@ void Display()
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_3D, TexName);
 	Pattern->Use();
+	Pattern->SetUniformVariable("uAlpha", 1.f*(float)sin(0.2 * M_PI * Time));
 	Pattern->SetUniformVariable("uTexUnit", 3);
-	Pattern->SetUniformVariable("uNoiseFreq", 1.f*(float)sin(2. * M_PI * Time));
-	Pattern->SetUniformVariable("uNoiseMag", 0.5f * (float)sin(2. * M_PI * Time));
+	Pattern->SetUniformVariable("uNoiseFreq", 1.f*(float)sin(0.2 * M_PI * Time));
+	Pattern->SetUniformVariable("uNoiseMag", 1.f*(float)sin(0.2 * M_PI * Time));
 	Pattern->SetUniformVariable((char *)"uKa", 0.1f);
 	Pattern->SetUniformVariable((char *)"uKd", 0.6f);
 	Pattern->SetUniformVariable((char *)"uKs", 0.3f);
