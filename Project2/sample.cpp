@@ -13,6 +13,7 @@
 // #include "glew.h"
 #include "glslprogramP5.h"
 #include "glut.h"
+#include "loadobjfile.cpp"
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 
@@ -700,6 +701,7 @@ void InitLists()
 	glMaterialf(GL_FRONT, GL_SHININESS, 8.);
 	glMaterialfv(GL_FRONT, GL_EMISSION, Array3(0., 0., 0.));
 
+	// LoadObjFile( "bunny010n.obj" );
 	MjbSphere(1.3f, 72, 72);
 	glEndList();
 
