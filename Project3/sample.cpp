@@ -161,6 +161,7 @@ GLuint TexName;
 
 int ActiveButton; // current button that is down
 GLuint AxesList;  // list to hold the axes
+GLuint Curtain;	  // list to hold the axes
 int AxesOn;		  // != 0 means to draw the axes
 float Color[3];
 int DebugOn;	// != 0 means to print debugging info
@@ -212,7 +213,15 @@ float *Array3(float, float, float);
 float *Array4(float, float, float, float);
 float *BlendArray3(float, float[3], float[3]);
 float *MulArray3(float, float[3]);
-
+float xmin = -1.f; // set this to what you want it to be
+float xmax = 1.f;  // set this to what you want it to be
+float ymin = -1.f; // set this to what you want it to be
+float ymax = 1.f;  // set this to what you want it to be
+float dx = xmax - xmin;
+float dy = ymax - ymin;
+float z = 0.f;	// set this to what you want it to be
+int numy = 128; // set this to what you want it to be
+int numx = 128; // set this to what you want it to be
 // main program:
 
 int main(int argc, char *argv[])
@@ -366,14 +375,14 @@ void Display()
 	T0 = 0.5f;
 	D = 0.1f;
 	float updateValue = sin(2. * M_PI * Time);
-	// updateValue = 0;
+	updateValue = 0;
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_3D, TexName);
 	Pattern->Use();
-	Pattern->SetUniformVariable("uAlpha", 1.f*(float)sin(0.2 * M_PI * Time));
+	Pattern->SetUniformVariable("uAlpha", 1.f * (float)sin(0.2 * M_PI * Time));
 	Pattern->SetUniformVariable("uTexUnit", 3);
-	Pattern->SetUniformVariable("uNoiseFreq", 1.f*(float)sin(0.2 * M_PI * Time));
-	Pattern->SetUniformVariable("uNoiseMag", 1.f*(float)sin(0.2 * M_PI * Time));
+	Pattern->SetUniformVariable("uNoiseFreq", 1.f * (float)sin(0.2 * M_PI * Time));
+	Pattern->SetUniformVariable("uNoiseMag", 1.f * (float)sin(0.2 * M_PI * Time));
 	Pattern->SetUniformVariable((char *)"uKa", 0.1f);
 	Pattern->SetUniformVariable((char *)"uKd", 0.6f);
 	Pattern->SetUniformVariable((char *)"uKs", 0.3f);
@@ -390,6 +399,7 @@ void Display()
 	// draw the current object:
 
 	glCallList(SphereList);
+	glCallList(Curtain);
 	Pattern->Use(0);
 
 	glutSwapBuffers();
@@ -569,6 +579,7 @@ unsigned char *ReadTexture3D(char *filename, int *width, int *height, int *depth
 	fclose(fp);
 	return texture;
 }
+
 void InitGraphics()
 {
 	// request the display modes:
@@ -685,7 +696,6 @@ void InitLists()
 	glutSetWindow(MainWindow);
 
 	// create the object:
-
 	SphereList = glGenLists(1);
 	float rgb[3] = {1., 1., 1.};
 	glNewList(SphereList, GL_COMPILE);
@@ -705,6 +715,23 @@ void InitLists()
 	MjbSphere(1.3f, 72, 72);
 	glEndList();
 
+	// create Pleats
+	Curtain = glGenLists(1);
+	glNewList(Curtain, GL_COMPILE);
+	for (int iy = 0; iy < numy; iy++)
+	{
+		glBegin(GL_QUAD_STRIP);
+		glNormal3f(1., 1., 1.);
+		for (int ix = 0; ix <= numx; ix++)
+		{
+			glTexCoord2f((float)ix / (float)numx + 2.f, (float)(iy + 0) / (float)numy);
+			glVertex3f(xmin + dx * (float)ix / (float)numx + 2.f, ymin + dy * (float)(iy + 0) / (float)numy, z);
+			glTexCoord2f((float)ix / (float)numx + 2.f, (float)(iy + 1) / (float)numy);
+			glVertex3f(xmin + dx * (float)ix / (float)numx + 2.f, ymin + dy * (float)(iy + 1) / (float)numy, z);
+		}
+		glEnd();
+	}
+	glEndList();
 	// create the axes:
 
 	AxesList = glGenLists(1);
