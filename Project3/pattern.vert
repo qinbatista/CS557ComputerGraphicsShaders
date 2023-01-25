@@ -17,6 +17,7 @@ varying vec3 vMCposition;
 
 void main() {
 	vMCposition = gl_Vertex.xyz;
+	vMCposition.x += AMP * sin(W * PI * vMCposition.y);
 	vST = gl_MultiTexCoord0.st;
 	vec3 vert = gl_Vertex.xyz;
 	vec3 norm = normalize(vert);
