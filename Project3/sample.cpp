@@ -375,14 +375,14 @@ void Display()
 	T0 = 0.5f;
 	D = 0.1f;
 	float updateValue = sin(2. * M_PI * Time);
-	updateValue = 0;
+	// updateValue = 0;
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_3D, TexName);
 	Pattern->Use();
 	Pattern->SetUniformVariable("uAlpha", 1.f * (float)sin(0.2 * M_PI * Time));
 	Pattern->SetUniformVariable("uTexUnit", 3);
-	Pattern->SetUniformVariable("uNoiseFreq", 1.f*updateValue);
-	Pattern->SetUniformVariable("uNoiseMag", 2.f*updateValue);
+	Pattern->SetUniformVariable("uNoiseFreq", 1.f+1*updateValue);
+	Pattern->SetUniformVariable("uNoiseMag", 2.f+1*updateValue);
 	Pattern->SetUniformVariable((char *)"uKa", 0.1f);
 	Pattern->SetUniformVariable((char *)"uKd", 0.6f);
 	Pattern->SetUniformVariable((char *)"uKs", 0.3f);
@@ -395,9 +395,9 @@ void Display()
 	Pattern->SetUniformVariable((char *)"Br", 0.3f + 0.7f * (float)(.5 + .5 * updateValue));
 	Pattern->SetUniformVariable((char *)"uTol", 0.005f * (float)(.5 + .5 * updateValue));
 	//vertex
-	Pattern->SetUniformVariable((char *)"uTime", 0.8f*updateValue);
-	Pattern->SetUniformVariable((char *)"K", 0.2f*updateValue);
-	Pattern->SetUniformVariable((char *)"P", 0.8f*updateValue);
+	Pattern->SetUniformVariable((char *)"uTime", 0.8f+0.2f*updateValue);
+	Pattern->SetUniformVariable((char *)"K", 0.2f+0.4f*updateValue);
+	Pattern->SetUniformVariable((char *)"P", 0.8f+0.2f*updateValue);
 
 	// draw the current object:
 
