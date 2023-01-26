@@ -63,9 +63,9 @@ void main() {
 	float Dist = sqrt(X / Ar * X / Ar + Y / Br * Y / Br);
 	float OffsetDist = Dist + n;
 	float scale = OffsetDist / Dist;
-	Dist = Dist*scale;
-	if(Dist <= (R + uTol)*uAlpha) {
-		if(Dist >= (R - uTol)*uAlpha) {
+	Dist = Dist * scale;
+	if(Dist <= (R + uTol)) {
+		if(Dist >= (R - uTol)) {
 			float t = smoothstep((R - uTol), (R + uTol), Dist);
 			myColor = mix(myPatternColor, myColor, t);
 		} else {
@@ -85,5 +85,9 @@ void main() {
 		s = pow(max(dot(Eye, ref), 0.), uShininess);
 	}
 	vec3 specular = uKs * s * SpecularColor.rgb;
-	gl_FragColor = vec4(ambient + diffuse + specular, 1.);
+	if(Dist <= (R + uTol)) {
+		gl_FragColor = vec4(ambient + diffuse + specular, 2);
+	} else {
+		gl_FragColor = vec4(ambient + diffuse + specular, 0);
+	}
 }
