@@ -368,14 +368,16 @@ void Display()
 	// updateValue = 0;
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_3D, TexName);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	Pattern->Use();
-	Pattern->SetUniformVariable("uAlpha", 1.f*(float)sin(0.2 * M_PI * Time));
+	Pattern->SetUniformVariable("uAlpha", 1.f * (float)sin(0.2 * M_PI * Time));
 	Pattern->SetUniformVariable("uTexUnit", 3);
-	Pattern->SetUniformVariable("uNoiseFreq", 1.f*(float)sin(0.2 * M_PI * Time));
-	Pattern->SetUniformVariable("uNoiseMag", 1.f*(float)sin(0.2 * M_PI * Time));
-	Pattern->SetUniformVariable((char *)"uKa", 0.1f);
-	Pattern->SetUniformVariable((char *)"uKd", 0.6f);
-	Pattern->SetUniformVariable((char *)"uKs", 0.3f);
+	Pattern->SetUniformVariable("uNoiseFreq", 1.f * (float)sin(0.2 * M_PI * Time));
+	Pattern->SetUniformVariable("uNoiseMag", 1.f * (float)sin(0.2 * M_PI * Time));
+	Pattern->SetUniformVariable((char *)"uKa", 0.5f);
+	Pattern->SetUniformVariable((char *)"uKd", 0.9f);
+	Pattern->SetUniformVariable((char *)"uKs", 0.9f);
 	Pattern->SetUniformVariable((char *)"uShininess", 8.f);
 	Pattern->SetUniformVariable((char *)"uS0", S0);
 	Pattern->SetUniformVariable((char *)"uT0", T0);
@@ -390,7 +392,7 @@ void Display()
 
 	glCallList(SphereList);
 	Pattern->Use(0);
-
+	glDisable(GL_BLEND);
 	glutSwapBuffers();
 	glFlush();
 }
