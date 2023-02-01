@@ -376,7 +376,7 @@ void Display()
     T0 = 0.5f;
     D = 0.1f;
     float updateValue = sin(M_PI * Time);
-    updateValue = 0;
+    // updateValue = 0;
     glActiveTexture(GL_TEXTURE3);
     glBindTexture(GL_TEXTURE_3D, TexName);
     Pattern->Use();
@@ -401,8 +401,8 @@ void Display()
     Pattern->SetUniformVariable((char *)"P", 0.8f + 0.2f * updateValue);
 
     float updateFractionValue = sin(M_PI * Time);
-    int uReflectUnit = 5;
-    int uRefractUnit = 5;
+    int uReflectUnit = 6;
+    int uRefractUnit = 7;
     float uEta = 0.0f;
     float uMix = 0.0f;
     glActiveTexture(GL_TEXTURE0 + uReflectUnit);
