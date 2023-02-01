@@ -369,11 +369,9 @@ void Display()
     }
 
     // since we are using glScalef( ), be sure normals get unitized:
-
     glEnable(GL_NORMALIZE);
 
     // enable the shader:
-
     S0 = 0.5f;
     T0 = 0.5f;
     D = 0.1f;
@@ -401,12 +399,13 @@ void Display()
     Pattern->SetUniformVariable((char *)"uTime", 0.8f + 0.2f * updateValue);
     Pattern->SetUniformVariable((char *)"K", 0.2f + 0.4f * updateValue);
     Pattern->SetUniformVariable((char *)"P", 0.8f + 0.2f * updateValue);
-
     // draw the current object:
-
     glCallList(SphereList);
     glCallList(Curtain);
     Pattern->Use(0);
+
+
+
 
     glutSwapBuffers();
     glFlush();
