@@ -11,12 +11,12 @@
 #endif
 
 // #include "glew.h"
+#include "bmptotexture.cpp"
 #include "glslprogramP5.h"
 #include "glut.h"
 #include "loadobjfile.cpp"
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
-
 //	This is a sample OpenGL / GLUT program
 //
 //	The objective is to draw a 3d object and change the color of the axes
@@ -404,8 +404,24 @@ void Display()
     glCallList(Curtain);
     Pattern->Use(0);
 
-
-
+    int uReflectUnit = 5;
+    int uRefractUnit = 6;
+    float uAd = 0.1f;
+    float uBd = 0.1f;
+    float uEta = 1.4f;
+    float uTol = 0.f;
+    float uMix = 0.4f;
+    PatternCube->Use();
+    glActiveTexture(GL_TEXTURE0 + uReflectUnit);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, CubeName);
+    glActiveTexture(GL_TEXTURE0 + uRefractUnit);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, CubeName);
+    PatternCube->SetUniformVariable("uReflectUnit", uReflectUnit);
+    PatternCube->SetUniformVariable("uRefractUnit", uRefractUnit);
+    PatternCube->SetUniformVariable("uMix", uMix);
+    PatternCube->SetUniformVariable("uEta", uEta);
+    // MjbSphere(1., 50, 50);
+    PatternCube->Use(0);
 
     glutSwapBuffers();
     glFlush();
@@ -660,17 +676,14 @@ void InitGraphics()
         fprintf(stderr, "GLEW initialized OK\n");
     fprintf(stderr, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
 #endif
-
+    bool valid =false;
     glGenTextures(1, &TexName);
-
     int nums, numt, nump;
     unsigned char *texture = ReadTexture3D("noise3d.064.tex", &nums, &numt, &nump);
     if (texture == NULL)
     {
         return;
     }
-
-    glBindTexture(GL_TEXTURE_3D, TexName);
     glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
@@ -679,16 +692,50 @@ void InitGraphics()
     glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, nums, numt, nump, 0, GL_RGBA,
                  GL_UNSIGNED_BYTE, texture);
     Pattern = new GLSLProgram();
-    bool valid = Pattern->Create((char *)"pattern.vert", (char *)"pattern.frag");
+    valid = Pattern->Create((char *)"pattern.vert", (char *)"pattern.frag");
     if (!valid)
     {
         fprintf(stderr, "Shader cannot be created!\n");
     }
     else
     {
-        fprintf(stderr, "Shader created.\n");
+        fprintf(stderr, "Shader pattern created.\n");
     }
     Pattern->SetVerbose(false);
+
+
+
+    PatternCube = new GLSLProgram();
+    valid = PatternCube->Create((char *)"texture.vert", (char *)"texture.frag");
+    if (!valid)
+    {
+        fprintf(stderr, "Shader cannot be created!\n");
+    }
+    else
+    {
+        fprintf(stderr, "Shader texture created.\n");
+    }
+    PatternCube->SetVerbose(false);
+
+    glGenTextures(1, &CubeName);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, CubeName);
+    glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    for (int file = 0; file < 6; file++)
+    {
+        int nums, numt;
+        unsigned char *texture2d = BmpToTexture(FaceFiles[file], &nums, &numt);
+        if (texture2d == NULL)
+            fprintf(stderr, "Could not open BMP 2D texture %s", FaceFiles[file]);
+        else
+            fprintf(stderr, "BMP 2D texture '%s' read -- nums = %d, numt = %d\n", FaceFiles[file], nums, numt);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + file, 0, 3, nums, numt, 0,
+                     GL_RGB, GL_UNSIGNED_BYTE, texture2d);
+        delete[] texture2d;
+    }
 }
 
 // initialize the display lists that will not change:
