@@ -375,15 +375,15 @@ void Display()
     S0 = 0.5f;
     T0 = 0.5f;
     D = 0.1f;
-    float updateValue = sin(2. * M_PI * Time);
+    float updateValue = sin(M_PI * Time);
     updateValue = 0;
     glActiveTexture(GL_TEXTURE3);
     glBindTexture(GL_TEXTURE_3D, TexName);
     Pattern->Use();
     Pattern->SetUniformVariable("uAlpha", 1.f * (float)sin(0.2 * M_PI * Time));
     Pattern->SetUniformVariable("uTexUnit", 3);
-    Pattern->SetUniformVariable("uNoiseFreq", 1.f + 1 * updateValue);
-    Pattern->SetUniformVariable("uNoiseMag", 2.f + 1 * updateValue);
+    Pattern->SetUniformVariable("uNoiseFreq", 1.f +  updateValue);
+    Pattern->SetUniformVariable("uNoiseMag", 1.f +  updateValue);
     Pattern->SetUniformVariable((char *)"uKa", 0.1f);
     Pattern->SetUniformVariable((char *)"uKd", 0.6f);
     Pattern->SetUniformVariable((char *)"uKs", 0.3f);
@@ -399,29 +399,24 @@ void Display()
     Pattern->SetUniformVariable((char *)"uTime", 0.8f + 0.2f * updateValue);
     Pattern->SetUniformVariable((char *)"K", 0.2f + 0.4f * updateValue);
     Pattern->SetUniformVariable((char *)"P", 0.8f + 0.2f * updateValue);
-    // draw the current object:
-    glCallList(SphereList);
-    glCallList(Curtain);
-    Pattern->Use(0);
 
+    float updateFractionValue = sin(M_PI * Time);
     int uReflectUnit = 5;
-    int uRefractUnit = 6;
-    float uAd = 0.1f;
-    float uBd = 0.1f;
-    float uEta = 1.4f;
-    float uTol = 0.f;
-    float uMix = 0.4f;
-    PatternCube->Use();
+    int uRefractUnit = 5;
+    float uEta = 0.0f;
+    float uMix = 0.0f;
     glActiveTexture(GL_TEXTURE0 + uReflectUnit);
     glBindTexture(GL_TEXTURE_CUBE_MAP, CubeName);
     glActiveTexture(GL_TEXTURE0 + uRefractUnit);
     glBindTexture(GL_TEXTURE_CUBE_MAP, CubeName);
-    PatternCube->SetUniformVariable("uReflectUnit", uReflectUnit);
-    PatternCube->SetUniformVariable("uRefractUnit", uRefractUnit);
-    PatternCube->SetUniformVariable("uMix", uMix);
-    PatternCube->SetUniformVariable("uEta", uEta);
-    // MjbSphere(1., 50, 50);
-    PatternCube->Use(0);
+    Pattern->SetUniformVariable("uReflectUnit", uRefractUnit);
+    Pattern->SetUniformVariable("uRefractUnit", uRefractUnit);
+    Pattern->SetUniformVariable("uMix", updateFractionValue);
+    Pattern->SetUniformVariable("uEta", updateFractionValue);
+    // draw the current object:
+    glCallList(SphereList);
+    glCallList(Curtain);
+    Pattern->Use(0);
 
     glutSwapBuffers();
     glFlush();
@@ -705,17 +700,17 @@ void InitGraphics()
 
 
 
-    PatternCube = new GLSLProgram();
-    valid = PatternCube->Create((char *)"texture.vert", (char *)"texture.frag");
-    if (!valid)
-    {
-        fprintf(stderr, "Shader cannot be created!\n");
-    }
-    else
-    {
-        fprintf(stderr, "Shader texture created.\n");
-    }
-    PatternCube->SetVerbose(false);
+    // PatternCube = new GLSLProgram();
+    // valid = PatternCube->Create((char *)"refection.vert", (char *)"refection.frag");
+    // if (!valid)
+    // {
+    //     fprintf(stderr, "Shader cannot be created!\n");
+    // }
+    // else
+    // {
+    //     fprintf(stderr, "Shader texture created.\n");
+    // }
+    // PatternCube->SetVerbose(false);
 
     glGenTextures(1, &CubeName);
     glBindTexture(GL_TEXTURE_CUBE_MAP, CubeName);
