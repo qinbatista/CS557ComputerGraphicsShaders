@@ -1,4 +1,3 @@
 
-ERROR: 0:7: Invalid call of undeclared identifier 'texture'
-ERROR: 0:8: Use of undeclared identifier 'newcolor'
+ERROR: 0:12: Type (bool) of redeclaration of 'uImageUnit' is incompatible with type (sampler2D) of previous declaration
 

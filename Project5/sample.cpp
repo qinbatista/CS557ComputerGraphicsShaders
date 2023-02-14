@@ -156,12 +156,13 @@ const GLfloat FOGDENSITY = {0.30f};
 const GLfloat FOGSTART = {1.5};
 const GLfloat FOGEND = {4.};
 GLuint TexName;
-
+GLuint Tex0;
 // non-constant global variables:
 
 int ActiveButton; // current button that is down
 GLuint AxesList;  // list to hold the axes
 GLuint Curtain;   // list to hold the axes
+GLuint Quad;      // list to hold the axes
 int AxesOn;       // != 0 means to draw the axes
 float Color[3];
 int DebugOn;    // != 0 means to print debugging info
@@ -402,26 +403,21 @@ void Display()
     // draw the current object:
     glCallList(SphereList);
     glCallList(Curtain);
+
     Pattern->Use(0);
 
-    int uReflectUnit = 5;
-    int uRefractUnit = 6;
-    float uAd = 0.1f;
-    float uBd = 0.1f;
-    float uEta = 1.4f;
-    float uTol = 0.f;
-    float uMix = 0.4f;
+    //****project5
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, Tex0);
     PatternCube->Use();
-    glActiveTexture(GL_TEXTURE0 + uReflectUnit);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, CubeName);
-    glActiveTexture(GL_TEXTURE0 + uRefractUnit);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, CubeName);
-    PatternCube->SetUniformVariable("uReflectUnit", uReflectUnit);
-    PatternCube->SetUniformVariable("uRefractUnit", uRefractUnit);
-    PatternCube->SetUniformVariable("uMix", uMix);
-    PatternCube->SetUniformVariable("uEta", uEta);
-    // MjbSphere(1., 50, 50);
+    // PatternCube->SetUniformVariable("uImageUnit", Tex0);
+    // PatternCube->SetUniformVariable("uRefractUnit", uRefractUnit);
+    // PatternCube->SetUniformVariable("uMix", uMix);
+    // PatternCube->SetUniformVariable("uEta", uEta);
+    glCallList(Quad);
     PatternCube->Use(0);
+    //****project5
+
 
     glutSwapBuffers();
     glFlush();
@@ -676,7 +672,7 @@ void InitGraphics()
         fprintf(stderr, "GLEW initialized OK\n");
     fprintf(stderr, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
 #endif
-    bool valid =false;
+    bool valid = false;
     glGenTextures(1, &TexName);
     int nums, numt, nump;
     unsigned char *texture = ReadTexture3D("noise3d.064.tex", &nums, &numt, &nump);
@@ -689,8 +685,8 @@ void InitGraphics()
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, nums, numt, nump, 0, GL_RGBA,
-                 GL_UNSIGNED_BYTE, texture);
+    glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, nums, numt, nump, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
+
     Pattern = new GLSLProgram();
     valid = Pattern->Create((char *)"pattern.vert", (char *)"pattern.frag");
     if (!valid)
@@ -702,8 +698,6 @@ void InitGraphics()
         fprintf(stderr, "Shader pattern created.\n");
     }
     Pattern->SetVerbose(false);
-
-
 
     PatternCube = new GLSLProgram();
     valid = PatternCube->Create((char *)"texture.vert", (char *)"texture.frag");
@@ -736,6 +730,21 @@ void InitGraphics()
                      GL_RGB, GL_UNSIGNED_BYTE, texture2d);
         delete[] texture2d;
     }
+    //****project5
+    glGenTextures(1, &Tex0);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, Tex0);
+    int Width, Height;
+    unsigned char *Texture = BmpToTexture("kec.negx.bmp", &Width, &Height);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glBindTexture(GL_TEXTURE_2D, Tex0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, Texture);
+    // OsuSphere(1.0, 20, 20);
+    //****project5
 }
 
 // initialize the display lists that will not change:
@@ -784,8 +793,18 @@ void InitLists()
         glEnd();
     }
     glEndList();
-    // create the axes:
+    // create a quad
+    Quad = glGenLists(1);
+    glNewList(Quad, GL_COMPILE);
+    glBegin(GL_QUADS);
+    glVertex2f(0.0f, 2.0f);
+    glVertex2f(0.0f, 4.0f);
+    glVertex2f(2.0f, 4.0f);
+    glVertex2f(2.0f, 2.0f);
+    glEnd();
+    glEndList();
 
+    // create the axes:
     AxesList = glGenLists(1);
     glNewList(AxesList, GL_COMPILE);
     glLineWidth(AXES_WIDTH);
