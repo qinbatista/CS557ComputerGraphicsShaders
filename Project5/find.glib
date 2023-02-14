@@ -1,0 +1,24 @@
+##OpenGL GLIB
+Perspective 70
+LookAt  0 0 3  0 0 0  0 1 0
+
+Vertex   find.vert
+Fragment find.frag
+Program  FindXYZ  				\
+			uUseST <true>		\
+			uS <0. .5 1.>		\
+			uDs <0. .2 1.>		\
+			uT <0. .5 1.>		\
+			uDt <0. .2 1.>		\
+			uX <-5. 0. 5.>		\
+			uDx <0. 3. 5.>		\
+			uY <-5. 0. 5.>		\
+			uDy <0. 3. 5.>		\
+			uZ <-5. 0. 5.>		\
+			uDz <0. 3. 5.>
+
+Color 1. 1. 1.
+#Obj tigerstsL.obj
+#Teapot
+Sphere
+ 

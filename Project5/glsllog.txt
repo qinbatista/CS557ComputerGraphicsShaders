@@ -1,0 +1,4 @@
+
+ERROR: 0:7: Invalid call of undeclared identifier 'texture'
+ERROR: 0:8: Use of undeclared identifier 'newcolor'
+
