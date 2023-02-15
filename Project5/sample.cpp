@@ -788,12 +788,17 @@ void InitLists()
     }
     glEndList();
     // create a quad
+    int width = 2;
     Quad = glGenLists(1);
     glNewList(Quad, GL_COMPILE);
     glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
     glVertex2f(0.0f, 2.0f);
+    glTexCoord2f(0.0f, 1.0f);
     glVertex2f(0.0f, 4.0f);
+    glTexCoord2f(1.0f, 1.0f);
     glVertex2f(2.0f, 4.0f);
+    glTexCoord2f(1.0f, 0.0f);
     glVertex2f(2.0f, 2.0f);
     glEnd();
     glEndList();
