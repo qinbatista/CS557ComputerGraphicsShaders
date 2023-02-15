@@ -403,21 +403,15 @@ void Display()
     // draw the current object:
     glCallList(SphereList);
     glCallList(Curtain);
-
     Pattern->Use(0);
 
     //****project5
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, Tex0);
     PatternCube->Use();
-    // PatternCube->SetUniformVariable("uImageUnit", Tex0);
-    // PatternCube->SetUniformVariable("uRefractUnit", uRefractUnit);
-    // PatternCube->SetUniformVariable("uMix", uMix);
-    // PatternCube->SetUniformVariable("uEta", uEta);
     glCallList(Quad);
     PatternCube->Use(0);
     //****project5
-
 
     glutSwapBuffers();
     glFlush();
@@ -731,19 +725,19 @@ void InitGraphics()
         delete[] texture2d;
     }
     //****project5
-    glGenTextures(1, &Tex0);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, Tex0);
     int Width, Height;
-    unsigned char *Texture = BmpToTexture("kec.negx.bmp", &Width, &Height);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    unsigned char *image_data = BmpToTexture("kec.bmp", &Width, &Height);
+    if (image_data == NULL)
+        fprintf(stderr, "Could not open BMP 2D texture kec.bmp");
+    else
+        fprintf(stderr, "BMP 2D texture kec.bmp read -- nums = %d, numt = %d\n", Width, Height);
+    glGenTextures(1, &Tex0);
     glBindTexture(GL_TEXTURE_2D, Tex0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, Texture);
-    // OsuSphere(1.0, 20, 20);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, image_data);
     //****project5
 }
 

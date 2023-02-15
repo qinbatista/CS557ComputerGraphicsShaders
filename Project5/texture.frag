@@ -15,5 +15,4 @@ void main() {
     vec4 newcolor;
     newcolor = texture2D(uImageUnit, gl_TexCoord[1].st);
     gl_FragColor = newcolor;
-
 }
