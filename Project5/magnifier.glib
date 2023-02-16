@@ -2,7 +2,7 @@
 Ortho -5. 5.   -5. 5.
 LookAt 0 0 2  0 0 0  0 1 0
 
-Texture2D 5 test.bmp
+Texture2D 5 kec.posz.bmp
 
 Vertex   magic.vert
 Fragment magic.frag
