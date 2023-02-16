@@ -9,10 +9,11 @@ uniform float uRad;
 uniform float uMagFactor;
 uniform float uRotAngle;
 uniform float uSharpFactor;
+varying vec2 vST;
 
 
 void main() {
     vec4 newcolor;
-    newcolor = texture2D(uImageUnit, gl_TexCoord[1].st);
+    newcolor = texture2D(uImageUnit, vST);
     gl_FragColor = newcolor;
 }

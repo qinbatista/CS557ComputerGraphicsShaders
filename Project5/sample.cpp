@@ -406,9 +406,10 @@ void Display()
     Pattern->Use(0);
 
     //****project5
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE7);
     glBindTexture(GL_TEXTURE_2D, Tex0);
     PatternCube->Use();
+    PatternCube->SetUniformVariable("uImageUnit", 7);
     glCallList(Quad);
     PatternCube->Use(0);
     //****project5
