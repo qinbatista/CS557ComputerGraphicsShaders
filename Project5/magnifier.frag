@@ -16,21 +16,6 @@ uniform float sizeT;
 varying vec2 vST;
 uniform bool uUseCircle;
 uniform float uRadius;
-// bool inRectangle() {
-//     float s = vST.s;
-//     float t = vST.t;
-//     if(s <= uSc + uDs && s >= uSc - uDs && t <= uTc + uDt && t >= uTc - uDt) {
-//         return true;
-//     }
-//     return false;
-// }
-
-// bool inCircle() {
-//     if(sqrt(pow((vST.s - uSc), 2) + pow((vST.t - uTc), 2)) <= uRadius) {
-//         return true;
-//     }
-//     return false;
-// }
 
 void main() {
     vec4 newcolor;
