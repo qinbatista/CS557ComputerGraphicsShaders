@@ -1,3 +1,4 @@
 
-ERROR: 0:12: Type (bool) of redeclaration of 'uImageUnit' is incompatible with type (sampler2D) of previous declaration
+ERROR: 0:58: Incompatible types (vec4 and vec3) in assignment (and no available implicit conversion)
+ERROR: 0:82: No matching function for call to mix(vec3, vec4, float)
 

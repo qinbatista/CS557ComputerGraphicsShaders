@@ -82,7 +82,7 @@ const float MINSCALE = {0.05f};
 const int LEFT = {4};
 const int MIDDLE = {2};
 const int RIGHT = {1};
-
+int Width, Height;
 // which projection:
 
 enum Projections
@@ -401,15 +401,26 @@ void Display()
     Pattern->SetUniformVariable((char *)"K", 0.2f + 0.4f * updateValue);
     Pattern->SetUniformVariable((char *)"P", 0.8f + 0.2f * updateValue);
     // draw the current object:
-    glCallList(SphereList);
-    glCallList(Curtain);
+    // glCallList(SphereList);
+    // glCallList(Curtain);
     Pattern->Use(0);
 
     //****project5
     glActiveTexture(GL_TEXTURE7);
     glBindTexture(GL_TEXTURE_2D, Tex0);
     PatternCube->Use();
+    PatternCube->SetUniformVariable("sizeS", Width);
+    PatternCube->SetUniformVariable("sizeT", Height);
     PatternCube->SetUniformVariable("uImageUnit", 7);
+    PatternCube->SetUniformVariable("uSc", 7);
+    PatternCube->SetUniformVariable("uTc", 7);
+    PatternCube->SetUniformVariable("uDs", 7);
+    PatternCube->SetUniformVariable("uDt", 7);
+    PatternCube->SetUniformVariable("uMagFactor", 7);
+    PatternCube->SetUniformVariable("uRotAngle", 7);
+    PatternCube->SetUniformVariable("uSharpFactor", 7);
+    PatternCube->SetUniformVariable("uUseCircle", 0);
+    PatternCube->SetUniformVariable("uRadius", 7);
     glCallList(Quad);
     PatternCube->Use(0);
     //****project5
@@ -726,7 +737,6 @@ void InitGraphics()
         delete[] texture2d;
     }
     //****project5
-    int Width, Height;
     unsigned char *image_data = BmpToTexture("kec.bmp", &Width, &Height);
     if (image_data == NULL)
         fprintf(stderr, "Could not open BMP 2D texture kec.bmp");
@@ -794,23 +804,26 @@ void InitLists()
     glNewList(Quad, GL_COMPILE);
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f);
-    glVertex2f(0.0f, 2.0f);
+    glVertex2f(-2.0f, -2.0f);
+
     glTexCoord2f(0.0f, 1.0f);
-    glVertex2f(0.0f, 4.0f);
+    glVertex2f(-2.0f, 2.0f);
+
     glTexCoord2f(1.0f, 1.0f);
-    glVertex2f(2.0f, 4.0f);
-    glTexCoord2f(1.0f, 0.0f);
     glVertex2f(2.0f, 2.0f);
+
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(2.0f, -2.0f);
     glEnd();
     glEndList();
 
     // create the axes:
-    AxesList = glGenLists(1);
-    glNewList(AxesList, GL_COMPILE);
-    glLineWidth(AXES_WIDTH);
-    Axes(1.5);
-    glLineWidth(1.);
-    glEndList();
+    // AxesList = glGenLists(1);
+    // glNewList(AxesList, GL_COMPILE);
+    // glLineWidth(AXES_WIDTH);
+    // Axes(1.5);
+    // glLineWidth(1.);
+    // glEndList();
 }
 
 // the keyboard callback:
